@@ -7,47 +7,58 @@
 
 void Snake::draw_nickname(RenderWindow& win) {
 	Text t;
-	t.move(this->snk[0][0], this->snk[0][1]);
-	t.setFillColor(sf::Color::Red);
-	t.setStyle(sf::Text::Bold | sf::Text::Underlined);
+
+	t.setFont(fo);
+	t.setCharacterSize(10);
+	t.setString(this->nickname);
+	t.move(this->snk[0][0]-10, this->snk[0][1]-14);
+	t.setFillColor(Color(150, 150, 150));
+	//t.setStyle(sf::Text::Bold | sf::Text::Underlined);
 	win.draw(t);
 }
 
 Snake::Snake(){
+	fo.loadFromFile("Font/arial.ttf");
 	rand_color(*this);
 }
 
 void Snake::rand_color(Snake& obj) {
-	srand(8725);
 	
-	if (1 + rand() % 2 == 1) {
-		obj.col[1] = 50 + rand() % 150;
-	}
-
-	if (1 + rand() % 2 == 2) {
-		obj.col[2] = 50 + rand() % 150;
-	}
-
+	obj.col[0] = 0;
+	obj.col[1] = 150;
+	obj.col[2] = 0;
 }
 
 void Snake::sn_func(RenderWindow& win) {
-	this->draw_nickname(win);
 	this->draw_snake(win);
 	this->anim_snake();
+	draw_lines(win);
+	this->draw_nickname(win);
 }
 
 void Snake::anim_snake() {
 	bool v = true;
 	int time = clock();
 
-	//cout << last_time << endl;
+	cout << time - last_time << endl;
 
 	if (time >= 1000 && index) {
 		this->last_time = time;
 		this->index = false;
 	}
 
-	if (time - last_time >= 2000) {
+	if (Keyboard::isKeyPressed(Keyboard::Left))
+		this->flag = 1;
+	if (Keyboard::isKeyPressed(Keyboard::Up))
+		this->flag = 2;
+	if (Keyboard::isKeyPressed(Keyboard::Right))
+		this->flag = 3;
+	if (Keyboard::isKeyPressed(Keyboard::Down))
+		this->flag = 4;
+
+	if (time - last_time >= 100) {
+		last_time = time;
+
 		if (flag == 1) {
 			this->snk[0][0] -= 10;
 		}
@@ -64,6 +75,7 @@ void Snake::anim_snake() {
 			this->snk[0][1] += 10;
 		}
 	}
+
 	for (int i = 0; v; i++)
 	{
 		if (this->snk[i][0] == 3) {

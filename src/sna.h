@@ -18,8 +18,9 @@ public:
 	int flag = 3;
 	int last_time = 0;
 	bool index = true;
+	Font fo;
 
-	string nickname = "Player";
+	string nickname = "FilippFox";
 
 	int snk[100][2] = {
 		{40, 10},
