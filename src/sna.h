@@ -11,38 +11,40 @@ using namespace std;
 class Snake {
 	
 public:
-	vector<int> snake;
-	int last_time;
+
+	int col[3] = {0, 0, 0};
+
+	bool b = true;
+	int flag = 3;
+	int last_time = 0;
 	bool index = true;
-	int vect = 0;
-	int speed = 200;
-	int index_bufer = 0;
-	vector<RectangleShape> bufer;
 
-	void add_snake_arr();
-	RectangleShape get_rect(int x, int y);
-	bool draw_snake();
-	void anim_snake();
-
-	Snake() {
-
-		snake[0] += 20;
-		snake[0] += 20;
-
-		snake[1] += 40;
-		snake[1] += 20;
-		
-		snake[2] += 60;
-		snake[2] += 20;
-	
-		snake[3] += 80;
-		snake[3] += 20;
-
+	int snk[100][2] = {
+		{ 0, 10},
+		{10, 10},
+		{20, 10},
+		{30, 10},
+		{3, 3}
 	};
 
-	~Snake();
+
+
+	void pop_snk();
+	void push_snk();
+
+	void anim_snake();
+	void draw_snake(RenderWindow &win);
+
+	void rand_color(Snake& obj);
+
+	void sn_func(RenderWindow& win);
+
+	Snake();
 };
 
-RectangleShape draw_line(float x, float y, int gr, float x_2, float y_2);
-RectangleShape draw_line_2(float x, float y, int gr, float x_2, float y_2);
+RectangleShape draw_line(int x, int y, int x_2, int y_2);
+RectangleShape draw_line(int x, int y, int x_2, int y_2, bool t, Snake& obj);
+void events(RenderWindow &win);
+void draw_lines(RenderWindow &wi);
+
 #endif
