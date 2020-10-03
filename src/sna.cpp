@@ -10,9 +10,9 @@ Snake::Snake(){
 }
 
 void Snake::rand_color(Snake& obj) {
-	obj.col[0] += 50 + rand() % 150;
-	obj.col[1] += 150 + rand() % 150;
-	obj.col[2] += 50 + rand() % 150;
+	obj.col[0] = 50 + rand() % 150;
+	obj.col[1] = 150 + rand() % 150;
+	obj.col[2] = 50 + rand() % 150;
 }
 
 void Snake::sn_func(RenderWindow& win) {
