@@ -19,11 +19,13 @@ public:
 	int last_time = 0;
 	bool index = true;
 
+	string nickname = "Player";
+
 	int snk[100][2] = {
-		{ 0, 10},
-		{10, 10},
-		{20, 10},
+		{40, 10},
 		{30, 10},
+		{20, 10},
+		{10, 10},
 		{3, 3}
 	};
 
@@ -31,6 +33,8 @@ public:
 
 	void pop_snk();
 	void push_snk();
+
+	void draw_nickname(RenderWindow& win);
 
 	void anim_snake();
 	void draw_snake(RenderWindow &win);

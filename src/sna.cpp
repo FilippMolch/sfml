@@ -5,17 +5,33 @@
 #include <vector>
 #include <ctime>
 
+void Snake::draw_nickname(RenderWindow& win) {
+	Text t;
+	t.move(this->snk[0][0], this->snk[0][1]);
+	t.setFillColor(sf::Color::Red);
+	t.setStyle(sf::Text::Bold | sf::Text::Underlined);
+	win.draw(t);
+}
+
 Snake::Snake(){
 	rand_color(*this);
 }
 
 void Snake::rand_color(Snake& obj) {
-	obj.col[0] = 50 + rand() % 150;
-	obj.col[1] = 150 + rand() % 150;
-	obj.col[2] = 50 + rand() % 150;
+	srand(8725);
+	
+	if (1 + rand() % 2 == 1) {
+		obj.col[1] = 50 + rand() % 150;
+	}
+
+	if (1 + rand() % 2 == 2) {
+		obj.col[2] = 50 + rand() % 150;
+	}
+
 }
 
 void Snake::sn_func(RenderWindow& win) {
+	this->draw_nickname(win);
 	this->draw_snake(win);
 	this->anim_snake();
 }
@@ -24,7 +40,7 @@ void Snake::anim_snake() {
 	bool v = true;
 	int time = clock();
 
-	cout << last_time << endl;
+	//cout << last_time << endl;
 
 	if (time >= 1000 && index) {
 		this->last_time = time;

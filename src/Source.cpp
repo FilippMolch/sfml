@@ -21,6 +21,8 @@ int main()
 		d.sn_func(window);
 		draw_lines(window);
 
+		cout << 1 + rand() % 3 << endl;
+
 		window.display();
 		window.clear(Color(0, 0, 0));
 	}
