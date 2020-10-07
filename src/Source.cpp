@@ -11,17 +11,38 @@ int main()
 {
 	setlocale(LC_ALL, "Rus");
 	ContextSettings set;
+
+
+	bool kok = true;
+
 	set.antialiasingLevel = 8;
-	RenderWindow window(VideoMode(1920/2, 1080/2), "snake", Style::Default, set);
+	RenderWindow window(VideoMode::getFullscreenModes()[0], "snake", Style::Default, set);
+
+	bool menu = true;
+
+	string txt = "Nick: ";
+
+	InterFace f;
+
+	while (menu)
+	{
+		events(window);
+		f.draw(window);
+		window.display();
+		window.clear(Color(90, 90, 90));
+	}
 	Snake d;
+	
 	int i = 0;
 	int x = 0;
 	while (window.isOpen()) {
-		events(window);
-		d.sn_func(window);
+		if (kok) {
+			events(window);
+			d.sn_func(window);
 
-		window.display();
-		window.clear(Color(0, 0, 0));
+			window.display();
+			window.clear(Color(0, 0, 0));
+		}
 	}
 
 	return 0;
