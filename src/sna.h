@@ -10,9 +10,11 @@ using namespace sf;
 using namespace std;
 
 class InterFace {
+private:
+	
 public:
 
-	void draw(RenderWindow& win);
+	void draw(RenderWindow& windowScreen);
 
 	InterFace();
 };
@@ -46,9 +48,6 @@ public:
 		{3, 3}
 	};
 
-//	vector< vector<int> > snk;
-
-
 	void pop_snk();
 	void push_snk();
 
@@ -64,10 +63,32 @@ public:
 	Snake();
 };
 
-void foo();
-RectangleShape draw_line(int x, int y, int x_2, int y_2);
-RectangleShape draw_line(int x, int y, int x_2, int y_2, bool t, Snake& obj);
-void events(RenderWindow &win);
-void draw_lines(RenderWindow &win);
+class sfmlWindow
+{
+private:
+	bool nickInput = true;
+	bool interFaceDraw = true;
+
+
+
+	RenderWindow *windowScreen;
+
+public:
+
+	RectangleShape draw_line(int x, int y, int x_2, int y_2);
+	RectangleShape draw_line(int x, int y, int x_2, int y_2, bool t, Snake& obj);
+	
+	void events(RenderWindow& windowScreen);
+	void draw_lines(RenderWindow& windowScreen);
+	void loop();
+	void mainFoo();
+
+	sfmlWindow(InterFace& interFaceObj, Snake& snakeClassObj, RenderWindow windowScreen) {
+	
+		windowScreen = 
+		mainFoo();
+	}
+
+};
 
 #endif

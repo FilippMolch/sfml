@@ -1,32 +1,84 @@
 #include "sna.h"
 #include <SFML/Graphics.hpp>
-#include <SFML/OpenGL.hpp>
 #include <iostream>
 #include <vector>
 #include <ctime>
+
+void sfmlWindow::mainFoo() {
+	loop();
+}
+
+void sfmlWindow::loop(){
+	
+	Event eve;
+
+	while (windowScreen.isOpen())
+	{
+		events(windowScreen);
+		
+		if (interFaceDraw) {
+
+			interFaceObj.draw(windowScreen);
+
+		}
+
+		windowScreen.clear(Color(0, 0, 0));
+		windowScreen.display();
+	}
+
+}
 
 InterFace::InterFace() {
 
 }
 
-void InterFace::draw(RenderWindow& win) {
+void InterFace::draw(RenderWindow& windowScreen) {
 	const int width = VideoMode::getFullscreenModes()[0].width;
 	const int height = VideoMode::getFullscreenModes()[0].width;
-	RectangleShape NickNameInput(Vector2f(width / 2 - 100, height / 2 + 10));
-	NickNameInput.move(0, 0);
-	NickNameInput.setFillColor(Color::Black);
 	
-	ProgramStack Nick;
-	Event eve;
+	while (true)
+	{
+		Event eve;
 
-}
+		while (windowScreen.pollEvent(eve))
+		{
 
-void foo() {
-	vector< vector<int> > v;
-	v.push_back(vector<int>());
-	v[0].push_back(100500);
-	int a = v[0][0];
-	//cout << a << endl;
+			if (eve.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Escape))
+				windowScreen.close();
+
+			if (Keyboard::isKeyPressed(Keyboard::BackSpace)) {
+
+			}
+
+			if (eve.mouseButton.button == sf::Mouse::Left)
+			{
+				std::cout << "mouse x: " << eve.mouseButton.x << std::endl;
+				std::cout << "mouse y: " << eve.mouseButton.y << std::endl;
+			}
+
+			if (eve.type == sf::Event::TextEntered)
+			{
+				if (eve.text.unicode) {
+					//txt = txt + static_cast<char>(eve.text.unicode);
+					//cout << txt << endl;
+				}
+
+			}
+
+		}
+
+		RectangleShape NickNameInput(Vector2f(100, 10));
+		NickNameInput.move(120, 120);
+		NickNameInput.setFillColor(Color::Black);
+
+		windowScreen.clear(Color(90, 90, 90));
+		windowScreen.draw(NickNameInput);
+	
+		windowScreen.display();
+
+		ProgramStack Nick;
+	}
+
 }
 	
 
@@ -38,7 +90,7 @@ void Snake::draw_nickname(RenderWindow& win) {
 	t.setString(this->nickname);
 	t.move(this->snk[0][0]-10, this->snk[0][1]-14);
 	t.setFillColor(Color(150, 150, 150));
-	//t.setStyle(sf::Text::Bold | sf::Text::Underlined);
+	
 	win.draw(t);
 }
 
@@ -63,8 +115,7 @@ void Snake::sn_func(RenderWindow& win) {
 	this->anim_snake();
 	this->draw_nickname(win);
 	
-	draw_lines(win);
-	foo();
+	//draw_lines(win);
 }
 
 void Snake::anim_snake() {
@@ -109,21 +160,8 @@ void Snake::anim_snake() {
 				break;
 		}
 
-		
-
 		this->push_snk();
 		this->pop_snk();
-		
-	/*for (int i = 1; v; i++)
-	{
-		if (this->snk[i][0] == 3) {
-			snk[i-1][0] = NULL;
-			snk[i-1][1] = NULL;
-			
-			v = false;
-			break;
-		}
-	}*/
 
 	}
 
@@ -137,29 +175,27 @@ void Snake::draw_snake(RenderWindow& win) {
 			b = false;
 			break;
 		}
-		win.draw(draw_line(20, 20, this->snk[iu][0], this->snk[iu][1], true, *this));
+		//win.draw(draw_line(20, 20, this->snk[iu][0], this->snk[iu][1], true, *this));
 	}
 	b = true;
 }
 
 
-void events(RenderWindow &win) {
+ProgramStack Nick;
+string txt = "";
+string txt_2 = "";
+void sfmlWindow::events(RenderWindow& windowScreen) {
 	
 	Event eve;
-	ProgramStack Nick;
 
-	while (win.pollEvent(eve))
+	while (windowScreen.pollEvent(eve))
 	{
 
-		if (eve.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Escape)) {
-			int time = clock();
-			cout << time;
-			win.close();
-
-		}
+		if (eve.type == Event::Closed || Keyboard::isKeyPressed(Keyboard::Escape))
+			windowScreen.close();
 
 		if (Keyboard::isKeyPressed(Keyboard::BackSpace)) {
-			
+
 		}
 
 		if (eve.mouseButton.button == sf::Mouse::Left)
@@ -174,14 +210,11 @@ void events(RenderWindow &win) {
 			if (eve.text.unicode) {
 				//txt = txt + static_cast<char>(eve.text.unicode);
 				//cout << txt << endl;
-				Nick.push('o');//static_cast<char>(eve.text.unicode));
-				cout << Nick.GetNickName() << endl;
 			}
 
 		}
 
 	}
-
 }
 
 void Snake::pop_snk() {
@@ -204,10 +237,10 @@ void Snake::pop_snk() {
 }
 
 void Snake::push_snk() {
-	bool v = true;
+	bool Index = true;
 	int x, y;
 
-	for (int i = 0; v ; i++)
+	for (int i = 0; Index; i++)
 	{
 		if (this->snk[i][0] == 3) {
 			x = this->snk[i-1][0];
@@ -219,7 +252,7 @@ void Snake::push_snk() {
 			this->snk[i + 1][0] = 3;
 			this->snk[i + 1][1] = 3;
 
-			v = false;
+			Index = false;
 			break;
 		}
 		cout << this->snk[i][0] << endl;
@@ -227,21 +260,21 @@ void Snake::push_snk() {
 
 }
 
-RectangleShape draw_line(int x, int y, int x_2, int y_2, bool t, Snake& obj) {
+RectangleShape sfmlWindow::draw_line(int x, int y, int x_2, int y_2, bool t, Snake& obj) {
 	RectangleShape l(Vector2f(x, y));
 	l.move(x_2, y_2);
 	l.setFillColor(Color(obj.col[0], obj.col[1], obj.col[2]));
 	return l;
 }
 
-RectangleShape draw_line(int x, int y, int x_2, int y_2) {
+RectangleShape sfmlWindow::draw_line(int x, int y, int x_2, int y_2) {
 	RectangleShape l(Vector2f(x, y));
 	l.move(x_2, y_2);
 	l.setFillColor(Color(50, 50, 50));
 	return l;
 }
 
-void draw_lines(RenderWindow &win) {
+void sfmlWindow::draw_lines(RenderWindow& windowScreen) {
 	bool line = true;
 	bool line2 = true;
 
@@ -249,14 +282,14 @@ void draw_lines(RenderWindow &win) {
 	int li2 = 0;
 	
 	while (line) {
-		win.draw(draw_line(1, VideoMode::getFullscreenModes()[0].width, li, 0));
+		windowScreen.draw(draw_line(1, VideoMode::getFullscreenModes()[0].width, li, 0));
 		li += 20;
 		if (li >= VideoMode::getFullscreenModes()[0].width)
 			line = false;
 	}
 	
 	while (line2) {
-		win.draw(draw_line(VideoMode::getFullscreenModes()[0].width, 1, 0, li2));
+		windowScreen.draw(draw_line(VideoMode::getFullscreenModes()[0].width, 1, 0, li2));
 		li2 += 20;
 		if (li2 >= VideoMode::getFullscreenModes()[0].width)
 			line2 = false;
